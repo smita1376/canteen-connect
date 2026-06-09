@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Connect - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Bungee', cursive;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .phone-frame {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            background: #FFFDF6;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: hidden;
+        }
+        .inner-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #000000;
+            background: #FAF6E9;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #FAF6E9;
+            border-bottom: 2px solid #E5E5E5;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            left: 10px;
+            width: 35px;
+            height: 35px;
+            background: none;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+        .menu-title {
+            font-family: 'Bungee', cursive;
+            font-size: 24px;
+            color: #000;
+            text-align: center;
+        }
+        .form-container {
+            padding: 20px;
+            height: calc(100% - 100px);
+            overflow-y: auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-family: 'Bungee', cursive;
+            font-size: 16px;
+            color: #000;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Bungee', cursive;
+            font-size: 14px;
+        }
+        .form-group input[type="file"] {
+            padding: 5px;
+        }
+        .add-btn, .remove-btn {
+            background: #A0C878;
+            border: none;
+            border-radius: 18px;
+            padding: 12px 24px;
+            font-family: 'Bungee', cursive;
+            font-size: 16px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 10px auto;
+        }
+        .remove-btn {
+            background: #FF6B6B;
+        }
+        .add-btn:hover, .remove-btn:hover {
+            transform: scale(1.05);
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Bungee', cursive;
+            font-size: 12px;
+            transform: translateX(300px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+        .menu-items-list {
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        .menu-item-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-family: 'Bungee', cursive;
+            font-size: 14px;
+        }
+        .menu-item-entry:last-child {
+            border-bottom: none;
+        }
+        .remove-item-btn {
+            background: #FF6B6B;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 10px;
+            color: white;
+            cursor: pointer;
+            font-family: 'Bungee', cursive;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="inner-frame">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <div class="menu-title">ADMIN PANEL</div>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="itemName">Item Name:</label>
+                    <input type="text" id="itemName" placeholder="Enter item name">
+                </div>
+                <div class="form-group">
+                    <label for="itemPrice">Price:</label>
+                    <input type="number" id="itemPrice" placeholder="Enter price">
+                </div>
+                <div class="form-group">
+                    <label for="itemImage">Image URL:</label>
+                    <input type="text" id="itemImage" placeholder="Enter image URL">
+                </div>
+                <button class="add-btn" onclick="addItem()">Add Item</button>
+                <button class="remove-btn" onclick="removeItem()">Remove Item</button>
+                <div class="menu-items-list" id="menuItemsList">
+                    <!-- Menu items will be listed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+    <script>
+        // Load and display menu items
+        function loadMenuItems() {
+            const menuItems = JSON.parse(localStorage.getItem('menuItems') || '[]');
+            const menuItemsList = document.getElementById('menuItemsList');
+            menuItemsList.innerHTML = '';
+            menuItems.forEach(item => {
+                const itemEntry = document.createElement('div');
+                itemEntry.className = 'menu-item-entry';
+                itemEntry.innerHTML = `
+                    <span>${item.name} - ₹${item.price}</span>
+                    <button class="remove-item-btn" onclick="removeItemByName('${item.name}')">Remove</button>
+                `;
+                menuItemsList.appendChild(itemEntry);
+            });
+        }
+
+        function addItem() {
+            const itemName = document.getElementById('itemName').value;
+            const itemPrice = document.getElementById('itemPrice').value;
+            const itemImage = document.getElementById('itemImage').value;
+
+            if (!itemName || !itemPrice || !itemImage) {
+                showNotification("Please fill all fields!");
+                return;
+            }
+
+            // Load existing menu items
+            let menuItems = JSON.parse(localStorage.getItem('menuItems') || '[]');
+
+            // Check if the item already exists
+            const existingItem = menuItems.find(item => item.name === itemName);
+            if (existingItem) {
+                showNotification("Item already exists!");
+                return;
+            }
+
+            // Add new item
+            menuItems.push({
+                name: itemName,
+                price: parseInt(itemPrice),
+                image: itemImage
+            });
+
+            // Save to localStorage
+            localStorage.setItem('menuItems', JSON.stringify(menuItems));
+
+            // Clear form
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemPrice').value = '';
+            document.getElementById('itemImage').value = '';
+
+            showNotification("Item added successfully!");
+            loadMenuItems();
+        }
+
+        function removeItem() {
+            const itemName = document.getElementById('itemName').value;
+            if (!itemName) {
+                showNotification("Please enter the item name to remove!");
+                return;
+            }
+            removeItemByName(itemName);
+        }
+
+        function removeItemByName(itemName) {
+            let menuItems = JSON.parse(localStorage.getItem('menuItems') || '[]');
+            const initialLength = menuItems.length;
+            menuItems = menuItems.filter(item => item.name !== itemName);
+
+            if (menuItems.length === initialLength) {
+                showNotification("Item not found!");
+                return;
+            }
+
+            // Save to localStorage
+            localStorage.setItem('menuItems', JSON.stringify(menuItems));
+            showNotification("Item removed successfully!");
+            loadMenuItems();
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function goBack() {
+            window.location.href = "menu.html";
+        }
+
+        // Load menu items when the page loads
+        window.onload = loadMenuItems;
+    </script>
+</body>
+</html>

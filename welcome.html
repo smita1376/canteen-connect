@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Connect - Welcome</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Bungee', cursive;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .phone-frame {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            background: #FFFDF6;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            max-width: 95vw;
+            max-height: 95vh;
+        }
+        .inner-frame {
+             position: relative;
+             width: 100%;
+             height: 100%;
+             background: #FAF6E9;
+             border-radius: 20px;
+             border: 1px solid #000000;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+        }
+        .welcome-text {
+            font-family: 'Bungee', cursive;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 36px;
+            line-height: 43px;
+            text-align: center;
+            color: #000;
+            max-width: 90%;
+            opacity: 1;
+            animation: fadeOut 2s ease-in forwards;
+        }
+        @keyframes fadeOut {
+            0%, 80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .phone-frame {
+                width: 95vw;
+                height: 95vh;
+                border-radius: 20px;
+                padding: 15px;
+            }
+            .welcome-text {
+                font-size: 28px;
+                line-height: 34px;
+            }
+        }
+        @media (max-height: 700px) {
+            .phone-frame {
+                height: 95vh;
+            }
+            .welcome-text {
+                font-size: 30px;
+                line-height: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="inner-frame">
+            <div class="welcome-text">
+                WELCOME TO<br>CANTEEN CONNECT
+            </div>
+        </div>
+    </div>
+    <script>
+        setTimeout(function() {
+            window.location.href = "login.html";
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Connect - Order Confirmed</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Bungee', cursive;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .phone-frame {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            background: #FFFDF6;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .inner-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #FAF6E9;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+        .checkmark-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .checkmark-icon::after {
+            content: "✓";
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .order-confirmed-title {
+            font-family: 'Bungee', cursive;
+            font-size: 28px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .order-confirmed-message {
+            font-family: 'Bungee', cursive;
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .back-to-menu-btn {
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-family: 'Bungee', cursive;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .back-to-menu-btn:hover {
+            background: #45a049;
+        }
+        .celebration-emoji {
+            font-size: 24px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="inner-frame">
+            <div class="checkmark-icon"></div>
+            <h1 class="order-confirmed-title">
+                Order Confirmed <span class="celebration-emoji">🎉</span>
+            </h1>
+            <p class="order-confirmed-message">
+                Thank you for your order!<br>
+                Your food will be ready soon
+            </p>
+            <button class="back-to-menu-btn" onclick="goBackToMenu()">Back to Menu</button>
+        </div>
+    </div>
+    <script>
+        function goBackToMenu() {
+            window.location.href = "menu.html";
+        }
+    </script>
+</body>
+</html>

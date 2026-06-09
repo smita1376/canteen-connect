@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canteen Connect - Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Bungee', cursive;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+        }
+        .phone-frame {
+            position: relative;
+            width: 375px;
+            height: 812px;
+            background: #FFFDF6;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+            max-width: 95vw;
+            max-height: 95vh;
+            overflow: hidden;
+        }
+        .inner-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #000000;
+            background: #FAF6E9;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: #FAF6E9;
+            border-bottom: 2px solid #E5E5E5;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            left: 10px;
+            width: 35px;
+            height: 35px;
+            background: none;
+            border: 2px solid #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+        .payment-title {
+            font-family: 'Bungee', cursive;
+            font-size: 24px;
+            color: #000;
+            text-align: center;
+        }
+        .payment-container {
+            padding: 20px;
+            height: calc(100% - 100px);
+            overflow-y: auto;
+        }
+        .payment-methods {
+            margin-bottom: 20px;
+        }
+        .payment-method-title {
+            font-family: 'Bungee', cursive;
+            font-size: 18px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .payment-option {
+            background: #C8E6C9;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 2px solid transparent;
+        }
+        .payment-option.selected {
+            border: 2px solid #2E7D32;
+            background: #A5D6A7;
+        }
+        .payment-option:hover {
+            transform: translateY(-2px);
+        }
+        .payment-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .payment-details {
+            flex: 1;
+        }
+        .payment-name {
+            font-family: 'Bungee', cursive;
+            font-size: 16px;
+            color: #000;
+            margin-bottom: 5px;
+        }
+        .payment-description {
+            font-family: 'Bungee', cursive;
+            font-size: 12px;
+            color: #555;
+        }
+        .total-amount-container {
+            background: #FF8A95;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .total-amount-text {
+            font-family: 'Bungee', cursive;
+            font-size: 18px;
+            color: #000;
+        }
+        .continue-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 15px;
+            font-family: 'Bungee', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .continue-btn:hover {
+            background: #333;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Bungee', cursive;
+            font-size: 12px;
+            transform: translateX(300px);
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="inner-frame">
+            <div class="header">
+                <button class="back-btn" onclick="goBack()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </button>
+                <div class="payment-title">PAYMENT</div>
+            </div>
+            <div class="payment-container">
+                <div class="total-amount-container">
+                    <div class="total-amount-text" id="totalAmount">TOTAL: ₹ 0</div>
+                </div>
+                <div class="payment-methods">
+                    <div class="payment-method-title">Payment Method</div>
+                    <div class="payment-option" onclick="selectPaymentMethod('upi')">
+                        <div class="payment-icon">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4Z" stroke="#2E7D32" stroke-width="2"/>
+                                <path d="M16 11V8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M12 11V8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M8 11V8" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 16V18" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M12 16V18" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M8 16V18" stroke="#2E7D32" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">UPI Payment</div>
+                            <div class="payment-description">Pay using UPI apps like PhonePe, GooglePay.</div>
+                        </div>
+                    </div>
+                    <div class="payment-option" onclick="selectPaymentMethod('cash')">
+                        <div class="payment-icon">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11Z" fill="#2E7D32"/>
+                                <path d="M12 2C15.3137 2 18 4.68629 18 8V10C18 10.2246 17.9498 10.4414 17.8536 10.636L19.3137 12.0961C19.6863 12.4687 20 12.9887 20 13.5313V19C20 20.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V13.5313C4 12.9887 4.31371 12.4687 4.68629 12.0961L6.14645 10.636C6.05023 10.4414 6 10.2246 6 10V8C6 4.68629 8.68629 2 12 2Z" fill="#2E7D32"/>
+                                <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3431 6 9 7.34315 9 9C9 10.6569 10.3431 12 12 12Z" fill="#2E7D32"/>
+                            </svg>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">Cash Payment</div>
+                            <div class="payment-description">Pay Cash when you collect your order.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="continue-btn" onclick="continueWithPayment()">Continue with Selected Payment</button>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+    <script>
+        let selectedPaymentMethod = null;
+        let totalAmount = 0;
+
+        function loadTotalAmount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            totalAmount = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            document.getElementById('totalAmount').textContent = `TOTAL: ₹ ${totalAmount}`;
+        }
+
+        function selectPaymentMethod(method) {
+            // Remove 'selected' class from all options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // Add 'selected' class to the clicked option
+            event.currentTarget.classList.add('selected');
+            selectedPaymentMethod = method;
+        }
+
+        function continueWithPayment() {
+            if (!selectedPaymentMethod) {
+                showNotification("Please select a payment method!");
+                return;
+            }
+
+            if (selectedPaymentMethod === 'upi') {
+                openUPIApp();
+            } else {
+                showNotification("Order confirmed! Pay with Cash on delivery.");
+                setTimeout(() => {
+                    window.location.href = "order_confirmed.html";
+                }, 2000);
+            }
+        }
+
+        function openUPIApp() {
+            // Replace with your actual UPI ID and details
+            const upiId = "atharvvarpe56@oksbi";
+            const name = "Atharv Sanjay Varpe";
+
+            // Create UPI deep link
+            const upiLink = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(name)}&am=${totalAmount}&cu=INR`;
+
+            // Open the UPI app
+            window.location.href = upiLink;
+
+            showNotification("Opening UPI app for payment...");
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+
+        function goBack() {
+            window.location.href = "Your_cart.html";
+        }
+
+        // Load total amount when the page loads
+        window.onload = loadTotalAmount;
+    </script>
+</body>
+</html>
