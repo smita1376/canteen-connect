@@ -363,5 +363,9 @@ const menuItems = JSON.parse(localStorage.getItem('menuItems')) || defaultItems;
         // Load menu items when the page loads
         window.onload = loadMenuItems;
     </script>
+    <div style="text-align: center; margin: 40px auto; padding: 20px; max-width: 300px; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <p style="font-weight: bold; font-size: 18px; color: #333; margin-bottom: 10px;">Scan to Pay via UPI</p>
+    <img src="upi_qr_code.png" alt="UPI QR Code" style="width: 100%; max-width: 200px; display: block; margin: 0 auto; border-radius: 8px;">
+</div>
 </body>
 </html>
